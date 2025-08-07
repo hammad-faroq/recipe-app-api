@@ -7,5 +7,6 @@ class calcTests(SimpleTestCase):
     def test_add_numbers(self):
         res = add1(5, 6)
         self.assertEqual(res, 11)
-# when we use the test prefix, the method got automaticlly picked up by the 
-# test library we are using, unittest, djnago.test, djago_rest_framwork.text etc etc
+# when we use the test prefix, the method got automaticlly picked up by the
+# test library we are using, unittest, djnago.test,
+# djago_rest_framwork.text etc etc
