@@ -1,5 +1,5 @@
-#DEFINING a simple function to check it throught eh djangotestcase
+# DEFINING a simple function to check it throught eh djangotestcase
 
 
-def add1 (x, y):
+def add1(x, y):
     return x + y
