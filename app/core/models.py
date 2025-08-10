@@ -1,5 +1,5 @@
 """
-Database models.
+Database models user customized to login via email field not by nmae field (:.
 """
 from django.db import models
 from django.contrib.auth.models import (
