@@ -26,7 +26,7 @@ class PublicUSerApiTest(TestCase):
             "password": "testpass123",
             "name": "Test Name",
         }
-        res= self.client.post(CREATE_USER_URL, status.HTTP_201_CREATED)
+        res= self.client.post(CREATE_USER_URL, payload)
         user= get_user_model().objects.get(email=payload["email"])#Requeest karna ka bad khud sa filer kar ka chekc akrna ha 
         self.assertTrue(user.check_password(payload["password"]))
         self.assertNotIn("password", res.data)
@@ -38,7 +38,7 @@ class PublicUSerApiTest(TestCase):
             "password": "testpass123",
             "name": "Test Name",
         }
-        create_user(payload)#The **pararms Automatically will do the email= Payload["eamil"] like stuff, Magic (:
+        create_user(**payload)#The **pararms Automatically will do the email= Payload["eamil"] like stuff, Magic (:
         res=self.client.post(CREATE_USER_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
@@ -49,7 +49,7 @@ class PublicUSerApiTest(TestCase):
             "password": "pw",
             "name": "Test Name",
         }
-        res=self.client.post(create_user, payload)
+        res=self.client.post(CREATE_USER_URL, payload)
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
         user_exist= get_user_model().objects.filter(email= payload['email']).exists()
         self.assertFalse(user_exist)
