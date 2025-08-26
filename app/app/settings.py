@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'drf_spectacular',#beacuse we are using some views of this def-spectacular
     'core',
     "user",
-    'rest_framework.authtoken',
+    'rest_framework.authtoken',#we use some genric views of the DRF, and some auth views of that 
+    'recipe',
 ]
 
 MIDDLEWARE = [
