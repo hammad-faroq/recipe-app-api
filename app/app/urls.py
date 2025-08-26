@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from drf_spectacular.views import (
-    SpectacularAPIView,
+    SpectacularAPIView,#inspects all the views, serilizzers and then cretes a single yml or json file 
     SpectacularSwaggerView,
 )
 from django.urls import path,include
@@ -25,7 +25,7 @@ urlpatterns = [
     path('api/schema/', SpectacularAPIView.as_view(), name='api-schema'),#yml file
     path(
         'api/docs/',
-        SpectacularSwaggerView.as_view(url_name='api-schema'),#human readle GUi with interaction
+        SpectacularSwaggerView.as_view(url_name='api-schema'),#human readle GUi with interaction and waht endpint(yml) fiel to use to load the Swagger 
         name='api-docs',
     ),
     path("api/user/",include("user.urls")),

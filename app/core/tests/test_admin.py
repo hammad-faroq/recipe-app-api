@@ -9,7 +9,7 @@ from django.test import Client
 class AdminSiteTests(TestCase):
     """Tests for Django admin."""
 
-    def setUp(self):
+    def setUp(self):#automcaically runs beofre every test case 
         """Create user and client."""
         self.client = Client()
         self.admin_user = get_user_model().objects.create_superuser(
@@ -26,7 +26,7 @@ class AdminSiteTests(TestCase):
     def test_users_lists(self):
         """Test that users are listed on page."""
         url = reverse('admin:core_user_changelist')
-        res = self.client.get(url)
+        res = self.client.get(url)#to submit a et request and get the response object 
 
         self.assertContains(res, self.user.name)
         self.assertContains(res, self.user.email)

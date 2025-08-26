@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'drf_spectacular',
+    'drf_spectacular',#beacuse we are using some views of this def-spectacular
     'core',
     "user",
     'rest_framework.authtoken',
@@ -136,4 +136,4 @@ AUTH_USER_MODEL = 'core.User'
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
-}
+}#tell  the django to use this drf spectucaler-schema

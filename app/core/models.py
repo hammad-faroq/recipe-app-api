@@ -13,12 +13,12 @@ from django.contrib.auth.models import (
 class UserManager(BaseUserManager):
     """Manager for users."""
 
-    def create_user(self, email, password=None, **extra_fields):
+    def create_user(self, email, password=None, **extra_fields):#extra fileds if we deine the phone number as well in the cusmtom user mdoel, so the key will match the key in teh mdoel and sote it , other siwewe if not match throw an error, facy way to store more items in the cumtomuser modle 
         """Create, save and return a new user."""
         if not email:
             raise ValueError('User must have an email address.')
         user = self.model(email=self.normalize_email(email), **extra_fields)
-        user.set_password(password)
+        user.set_password(password)#the set passowrd internally called the has function to store it 
         user.save(using=self._db)
 
         return user
@@ -41,8 +41,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
-    objects = UserManager()
+    objects = UserManager()#this line will tell the dkango to use the cusotm user model manager insted of the deafult one
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'email'#use email for the login/identification(by deaulft usename was)
+
 #passowrd, lastlogin are automatically added when we inherit the abstractBaseuser, and is_superuser, groups & permissions
 #are automcaticllay added when we inherit the PermissionMixin
