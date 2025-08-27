@@ -17,6 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields=['email', 'password', "name"]
         extra_kwargs= {"password": {"write_only": True, 'min_length':5}}#password wapis response ma na jya,test case
 
+    #the Api /api/user/create/ is posting to this serilizers and usinf the below metjod to create the user
     def create(self, validate_data):#serilizers.modelserlilzers calls the deauflt create with no passord hash, override it to call the custom create user in custom user model
         """Cretae the sucto based userr calss with the validated data provided"""
         return get_user_model().objects.create_user(**validate_data)
@@ -49,14 +50,17 @@ class AuthTokenSerializer(serializers.Serializer):
         """Validate and authenticate the user."""
         email = attrs.get('email')
         password = attrs.get('password')
+
         user = authenticate(#authenticate checks if the user exists already with thihs email
             request=self.context.get('request'),#optional pararmter to give some extra info aout which ip calinng from to limimt login attempts
             username=email,
             password=password,
         )
+
         if not user:
-            msg = _('Unable to authenticate with provided credentials.')
+            msg = _('Unable to authenticate with provided credentials.Dont try to Attatck my APi plase')
             raise serializers.ValidationError(msg, code='authorization')
+        
         attrs['user'] = user#attach user object to the attrs dict, wihch will be used by the Token.objects.get_or_create(user=user).ObtainAuthToken class
         return attrs
     

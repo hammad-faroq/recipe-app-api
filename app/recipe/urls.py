@@ -14,9 +14,27 @@ from recipe import views
 
 router = DefaultRouter()
 router.register('recipes', views.RecipeViewSet)
+router.register('tags', views.TagViewSet)
 
-app_name = 'recipe'
+app_name = 'recipe'#need to set this variable for the reverse name mapping
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('', include(router.urls)),#include all the urls generaetd but the router 
 ]
+
+
+"""This sinle line gonna create this vuiew
+router.register('recipes', views.RecipeViewSet)
+GET /api/recipe/reci/ → list
+
+POST /api/recipe/reci/ → create
+
+GET /api/recipe/reci/{id}/ → retrieve
+
+PUT /api/recipe/reci/{id}/ → update
+
+PATCH /api/recipe/reci/{id}/ → partial update
+
+DELETE /api/recipe/reci/{id}/ → delete
+
+"""

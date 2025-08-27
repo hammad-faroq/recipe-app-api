@@ -11,6 +11,7 @@ from user.serializers import (
     UserSerializer,
     AuthTokenSerializer,
 )
+#this class which we have inherited implements GEt, Put and PAtch
 class ManageUserView(generics.RetrieveUpdateAPIView):
     """Manage the authenticated user."""
     serializer_class = UserSerializer
@@ -22,16 +23,32 @@ class ManageUserView(generics.RetrieveUpdateAPIView):
         return self.request.user
 
 
-
+#implements the post automatically, TO create a new user
 class CreateUserView(generics.CreateAPIView):#The View returns a Response(serializer.errors, status=400) automatically if invalid
     """Create a new user in the system."""
     serializer_class = UserSerializer
 
 
+#Implenets the post automatically, to create a tokken for that user 
+#obtain auth tokken calls the .is_valid which we have implented to check taht whttee the user exist wth this email or not?
 
 class CreateTokenView(ObtainAuthToken):#obtain Auth tokken does this ; after post to the serlilizerwe have provided ;Token.objects.get_or_create(user=user).
     """Create a new auth token for user."""
     serializer_class = AuthTokenSerializer
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
+
+"""
+api_settings.DEFAULT_RENDERER_CLASSES measn
+[
+    'rest_framework.renderers.JSONRenderer',
+    'rest_framework.renderers.BrowsableAPIRenderer',
+]
+This means:
+
+If you call the API via Postman → you get JSON.
+
+If you call it in a browser → you get DRF’s nice browsable API UI.
+
+"""
 
 
