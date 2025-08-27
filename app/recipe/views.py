@@ -20,7 +20,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):#GET /api/recipe/reci/ → list all recipes (uses get_queryset + RecipeSerializer)
         """TO override the get query set to get the recipes of the authenticated users only"""
-        return Recipe.objects.filter(user=self.request.user).order_by('-id')
+        return Recipe.objects.filter(user=self.request.user).order_by('-id')#it will aslso give the tags associated with this recipe object
     
 
  #Both of thses methods are mentioned in theh django rest freamowrk documentation on how they wotks anad how to override them adn their ehaviour, waht pararmters they expetsa nd waht objecst they already have
