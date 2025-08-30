@@ -60,7 +60,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             tags = validated_data.pop('tags', [])
             ingredients = validated_data.pop('ingredients', [])
 
-            recipe = Recipe.objects.create(**validated_data)
+            recipe = Recipe.objects.create(**validated_data)#i am just creating the object and not handling the duplication
             self._get_or_create_tags(tags, recipe)
             self._get_or_create_ingredients(ingredients, recipe)
             return recipe

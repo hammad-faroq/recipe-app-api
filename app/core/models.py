@@ -68,7 +68,7 @@ class Recipe(models.Model):
     time_minutes = models.IntegerField()
     price = models.DecimalField(max_digits=5, decimal_places=2)
     link = models.CharField(max_length=255, blank=True)
-    tags = models.ManyToManyField('Tag')#Recipe has a many-2-many relationship with the tags
+    tags = models.ManyToManyField('Tag')#Many 2 many Created a automatic join table between the two meodsl with the primary key as forign key of both tableswith on del cascade to del it from the recipe as well when we del the tag; Recipe has a many-2-many relationship with the tags
     # ingredients = models.ManyToManyField('Ingredient')# SAMKE LIKE THE TAGS
     ingredients = models.ManyToManyField('Ingredient')
     image = models.ImageField(null=True, upload_to=recipe_image_file_path)#db not gonna store the binary, it gonna store the path where  the actual image is uploaded like the static or mdeia folders i=on the server
