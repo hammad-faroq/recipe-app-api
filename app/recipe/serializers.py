@@ -27,7 +27,7 @@ class TagSerializer(serializers.ModelSerializer):
 class RecipeSerializer(serializers.ModelSerializer):
     """Serilizer for the recipe """
     tags = TagSerializer(many=True, required=False)
-    ingredients = IngredientSerializer(many=True, required=False)
+    ingredients = IngredientSerializer(many=True, required=False)#then connect it wth the seperete dfiened model, srilizer, to work in the iews adn routers
 
     class Meta:
         model = Recipe
@@ -87,4 +87,13 @@ class RecipeDetailSerializer(RecipeSerializer):
     """Serializer for recipe detail view.Which is just the extension of the prevois calss and thats how we do it in the djano rest freamowrk"""
 
     class Meta(RecipeSerializer.Meta):
-        fields = RecipeSerializer.Meta.fields + ['description']
+        fields = RecipeSerializer.Meta.fields + ['description', 'image']
+
+class RecipeImageSerializer(serializers.ModelSerializer):
+    """Serializer for uploading images to recipes."""
+
+    class Meta:
+        model = Recipe
+        fields = ['id', 'image']
+        read_only_fields = ['id']
+        extra_kwargs = {'image': {'required': 'True'}}

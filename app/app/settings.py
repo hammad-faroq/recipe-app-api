@@ -141,3 +141,7 @@ AUTH_USER_MODEL = 'core.User'
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }#tell  the django to use this drf spectucaler-schema
+
+SPECTACULAR_SETTINGS = {
+    'COMPONENT_SPLIT_REQUEST': True,
+}# TO kame the Image-upload work through the browserable Ui inteface in swagger usinght edrf spectucalar yml to Create the GUI

@@ -12,6 +12,7 @@ services:
       - dev-static-data:/vol/web
     command: >
        sh -c "python manage.py wait_for_db &&
+              chown -R django-user:django-user /vol/web &&
               python manage.py migrate &&
               python manage.py runserver 0.0.0.0:8000"
     environment:
@@ -21,6 +22,7 @@ services:
       - DB_USER=devuser
     depends_on:
       - db
+    user: root
 
   db:
     image: postgres:13-alpine

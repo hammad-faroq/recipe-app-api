@@ -3,12 +3,15 @@ The url gonna call the view which gonna call the serilizer --> model, and three 
 provides are Viewset, Apiview and Generic
 """
 
-from rest_framework import viewsets,mixins
+from rest_framework import viewsets,mixins, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from core.models import Recipe, Tag, Ingredient
 from recipe import serializers
+
+from rest_framework.decorators import action#for the suctom action of image-upload
+from rest_framework.response import Response#to give the resprective Status code with respose in the custom action
 
 class RecipeViewSet(viewsets.ModelViewSet):
     """If we ewat fnctionality like same view but differnet serilizers we ust overide the funtion Get_serliazer_call to have this behaviiur"""
@@ -29,11 +32,25 @@ class RecipeViewSet(viewsets.ModelViewSet):
         """Return appropriate serializer class for request."""
         if self.action == 'list':
             return serializers.RecipeSerializer
+        elif self.action == 'upload_image':
+            return serializers.RecipeImageSerializer
         return serializers.RecipeDetailSerializer
     
     def perform_create(self, serializer):#POST /api/recipe/reci/ → create a recipe (uses perform_create + RecipeDetailSerializer by default, unless overridden)
         """Create a new recipe.To attach the recipe object with the user"""
         serializer.save(user=self.request.user)
+
+    @action(methods=['POST'], detail=True, url_path='upload-image')#detail=True, gonna have the id with the url adn in the view
+    def upload_image(self, request, pk=None):#the function for the custom action of image-upload
+        """Upload an image to recipe."""#/api/recipe/recipes/{id}/upload-image/ (when detail is included)
+        recipe = self.get_object()
+        serializer = self.get_serializer(recipe, data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 #Refactoring the code 
 class BaseRecipeAttrViewset(mixins.DestroyModelMixin,mixins.UpdateModelMixin ,mixins.ListModelMixin, viewsets.GenericViewSet):

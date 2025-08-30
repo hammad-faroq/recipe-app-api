@@ -17,7 +17,7 @@ def recipe_image_file_path(instance, filename):
     ext = os.path.splitext(filename)[1]#splits the file name into (name, extension).
     filename = f'{uuid.uuid4()}{ext}'
 
-    return os.path.join('uploads', 'recipe', filename)#valid path (uploads/recipe/<filename>).
+    return os.path.join('uploads', 'recipe', filename)#valid path (uploads/recipe/<filename>).;#genereats the realtive path
 
 class UserManager(BaseUserManager):
     """Manager for users."""
@@ -72,7 +72,7 @@ class Recipe(models.Model):
     # ingredients = models.ManyToManyField('Ingredient')# SAMKE LIKE THE TAGS
     ingredients = models.ManyToManyField('Ingredient')
     image = models.ImageField(null=True, upload_to=recipe_image_file_path)#db not gonna store the binary, it gonna store the path where  the actual image is uploaded like the static or mdeia folders i=on the server
-
+    #image upload_to=recipe_image_file_path tells Django where inside your MEDIA_ROOT the file should be stored.
     def __str__(self):
         return self.title
     
