@@ -8,8 +8,16 @@ from django.contrib.auth.models import (
     BaseUserManager,
     PermissionsMixin,
 )
-#self. normalize meail is a method which is in the parent calss already implemented, we are just implementing the create user and create super user methiod in the custom user model maanger class
 
+import uuid
+import os #python library to interact with teh operating system
+#self. normalize meail is a method which is in the parent calss already implemented, we are just implementing the create user and create super user methiod in the custom user model maanger class
+def recipe_image_file_path(instance, filename):
+    """Generate file path for new recipe image. Ensyre every image has unique idetifier uploads/recipe/550e8400-e29b-41d4-a716-446655440000.jpg"""
+    ext = os.path.splitext(filename)[1]#splits the file name into (name, extension).
+    filename = f'{uuid.uuid4()}{ext}'
+
+    return os.path.join('uploads', 'recipe', filename)#valid path (uploads/recipe/<filename>).
 
 class UserManager(BaseUserManager):
     """Manager for users."""
@@ -63,6 +71,7 @@ class Recipe(models.Model):
     tags = models.ManyToManyField('Tag')#Recipe has a many-2-many relationship with the tags
     # ingredients = models.ManyToManyField('Ingredient')# SAMKE LIKE THE TAGS
     ingredients = models.ManyToManyField('Ingredient')
+    image = models.ImageField(null=True, upload_to=recipe_image_file_path)#db not gonna store the binary, it gonna store the path where  the actual image is uploaded like the static or mdeia folders i=on the server
 
     def __str__(self):
         return self.title
